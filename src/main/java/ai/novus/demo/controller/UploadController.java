@@ -16,7 +16,6 @@ public class UploadController {
     private final UploadService service;
 
     @PostMapping("/upload")
-    @ResponseStatus(HttpStatus.OK)
     public String uploadCat(@RequestParam("name") String name, @RequestParam("file") MultipartFile file) {
         service.upload(name,file);
         return "redirect:/result";
