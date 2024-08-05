@@ -40,6 +40,7 @@ public class VoteServiceImpl implements VoteService {
         if (pair == null) {
             List<Cat> cats = catRepository.findAll();
             userSession.initializePairs(cats);
+            pair = userSession.getNextPair();
         }
 
         Pair<VoteCatResponse,VoteCatResponse> pairdto = null;

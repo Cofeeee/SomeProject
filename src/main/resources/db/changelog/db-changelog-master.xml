@@ -38,7 +38,15 @@
                 referencedColumnNames="id"/>
     </changeSet>
 
-    <changeSet id="2" author="author">
+    <changeSet id="3" author="author_name">
+        <createSequence sequenceName="cat_seq" startValue="1" incrementBy="50"/>
+    </changeSet>
+
+    <changeSet id="4" author="author_name">
+        <createSequence sequenceName="vote_seq" startValue="1" incrementBy="50"/>
+    </changeSet>
+
+    <changeSet id="5" author="author">
         <sqlFile path="db/changelog/data.sql" />
     </changeSet>
 

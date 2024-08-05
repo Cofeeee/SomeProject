@@ -24,7 +24,6 @@ public class VoteController {
     private final VoteService service;
 
     @GetMapping("/vote")
-    @ResponseStatus(HttpStatus.OK)
     public String vote(Model model, HttpSession session) {
         String userId = (String) session.getAttribute("userId");
 
@@ -46,7 +45,6 @@ public class VoteController {
     }
 
     @PostMapping("/vote")
-    @ResponseStatus(HttpStatus.OK)
     public String vote(@RequestParam Long catId, @RequestParam String userId) {
         service.vote(catId, userId);
 

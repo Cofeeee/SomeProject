@@ -15,7 +15,6 @@ public class ResultController {
     private final ResultService service;
 
     @GetMapping("/result")
-    @ResponseStatus(HttpStatus.OK)
     public String showResultsPage(Model model) {
         model.addAttribute("cats", service.getResult());
         return "result";
