@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Создание таблицы 'cat' -->
+    <changeSet id="1" author="author_name">
+        <createTable tableName="cat">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_file_name" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Создание таблицы 'vote' -->
+    <changeSet id="2" author="author_name">
+        <createTable tableName="vote">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cat_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="varchar(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="vote"
+                baseColumnNames="cat_id"
+                constraintName="fk_vote_cat"
+                referencedTableName="cat"
+                referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="2" author="author">
+        <sqlFile path="db/changelog/data.sql" />
+    </changeSet>
+
+</databaseChangeLog>

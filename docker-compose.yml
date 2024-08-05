@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  app:
+    image: myapp:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/demo
+      - SPRING_DATASOURCE_USERNAME=LatteLove
+      - SPRING_DATASOURCE_PASSWORD=IrishLatte
+      - MINIO_URL=http://minio:9000
+      - MINIO_ACCESS_KEY=Xuenio
+      - MINIO_SECRET_KEY=XuenioMinio
+    depends_on:
+      - db
+      - minio
+    networks:
+      - mynetwork
+
+  db:
+    image: 'postgres:13.1-alpine'
+    environment:
+      POSTGRES_USER: LatteLove
+      POSTGRES_PASSWORD: IrishLatte
+      POSTGRES_DB: demo
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+
+  minio:
+    image: minio/minio
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=Xuenio
+      - MINIO_ROOT_PASSWORD=XuenioMinio
+      - MINIO_BROWSER_REDIRECT_URL=http://localhost:9001
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - mynetwork
+
+volumes:
+  pgdata:
+  minio_data:
+
+networks:
+  mynetwork:
+    driver: bridge
